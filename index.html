@@ -99,7 +99,7 @@
   }
   </script>
 
-  <style>
+    <style>
     body { font-family: 'Inter', sans-serif; }
     .publication-title { line-height: 1.08; }
     .hero.is-phy { background: linear-gradient(135deg, #f7f9ff 0%, #eef5ff 50%, #ffffff 100%); }
@@ -119,6 +119,69 @@
     .movie-section .subtitle { font-size: 1rem; color: #4c5870; }
     .movie-title { font-weight: 700; color: #24318f; margin-top: 0.75rem; }
     .movie-caption { max-width: 900px; margin: 0.5rem auto 1.5rem; color: #4c5870; }
+
+        /* ====== 优化：视频平铺网格样式（放大显示） ====== */
+    .video-grid {
+      margin-top: 1.5rem;
+    }
+    .video-grid .column {
+      display: flex;
+      flex-direction: column;
+    }
+    .video-grid video {
+      width: 100%;
+      height: 280px;              /* 👈 从 220px 调大到 280px，视频画面会更大 */
+      object-fit: contain;        
+      border-radius: 12px;
+      box-shadow: 0 6px 20px rgba(20,35,90,0.07);
+      border: 1px solid #e8ecf6;
+      background: #000;           
+      margin-bottom: 0.75rem;
+    }
+    .video-grid .subtitle {
+      flex-grow: 1; 
+      font-size: 0.95rem;
+      line-height: 1.4;
+    }
+
+    /* ====== 优化：实验结果平铺网格样式（完整显示且对齐） ====== */
+    .results-grid {
+      margin-top: 2rem;
+    }
+    .result-card {
+      height: 100%;               /* 让卡片撑满 Bulma 列的高度，保证同行卡片等高 */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: #fff;           /* 给卡片加个白色背景，方便看出统一范围 */
+      border-radius: 14px;
+      box-shadow: 0 8px 24px rgba(20,35,90,0.08);
+      border: 1px solid #e8ecf6;
+      padding: 1rem;              /* 给卡片内部加点内边距，让图片不贴边 */
+      overflow: hidden;
+    }
+    .result-card img {
+      width: 100%;       
+      height: 700px;              /* 设定一个统一的图片展示区域高度，可根据需要调整 */
+      object-fit: contain;        /* 核心属性：图片等比例缩放，完整显示在 280px 高的区域内，不裁剪、不变形 */
+      background: #fff;           /* 图片缩放后留白的背景色，设为白色融入卡片 */
+      border-radius: 8px;         /* 图片自身的微小圆角 */
+      margin-bottom: 1rem;
+      transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    }
+    .result-card img:hover {
+      transform: translateY(-4px) scale(1.01);
+      box-shadow: 0 12px 32px rgba(20,35,90,0.12);
+    }
+    .result-caption {
+      font-size: 0.95rem;
+      color: #4c5870;
+      max-width: 95%;
+      line-height: 1.5;
+      text-align: center;
+      margin-top: auto;           /* 让文字说明始终贴在卡片底部 */
+    }
+
   </style>
 </head>
 
@@ -302,60 +365,71 @@
 
       <div class="container">
         <h3 class="title is-4 has-text-centered" style="margin-top: 2rem;">Main experimental results</h3>
-        <div id="main-results-carousel" class="carousel results-carousel">
-          <div class="item">
-            <img src="static/images/Fig2.png" alt="Trail-guided swarm foraging results" loading="lazy">
-            <h2 class="subtitle has-text-centered">
-              <strong>Trail-Guided Swarm Foraging.</strong> PhySwarm generates exploration, resource approach, homing and trail-following within one physical model.
-            </h2>
+                <div class="results-grid columns is-multiline is-centered">
+          <div class="column is-6-desktop is-12-tablet">
+            <div class="result-card">
+              <img src="static/images/Fig2.png" alt="Trail-guided swarm foraging results" loading="lazy">
+              <p class="result-caption has-text-centered">
+                <strong>Trail-Guided Swarm Foraging.</strong> PhySwarm generates exploration, resource approach, homing and trail-following within one physical model.
+              </p>
+            </div>
           </div>
-          <div class="item">
-            <img src="static/images/Fig3.png" alt="Formation-reconfigurable swarm navigation results" loading="lazy">
-            <h2 class="subtitle has-text-centered">
-              <strong>Formation-Reconfigurable Navigation.</strong> The swarm compresses through geometric constraints and recovers its target morphology.
-            </h2>
+          
+          <div class="column is-6-desktop is-12-tablet">
+            <div class="result-card">
+              <img src="static/images/Fig3.png" alt="Formation-reconfigurable swarm navigation results" loading="lazy">
+              <p class="result-caption has-text-centered">
+                <strong>Formation-Reconfigurable Navigation.</strong> The swarm compresses through geometric constraints and recovers its target morphology.
+              </p>
+            </div>
           </div>
-          <div class="item">
-            <img src="static/images/Fig4.png" alt="Role-adaptive swarm search and rescue results" loading="lazy">
-            <h2 class="subtitle has-text-centered">
-              <strong>Role-Adaptive Search and Rescue.</strong> Robots self-organize into search, response and relay roles to maintain base--target connectivity.
-            </h2>
+          
+          <div class="column is-6-desktop is-12-tablet">
+            <div class="result-card">
+              <img src="static/images/Fig4.png" alt="Role-adaptive swarm search and rescue results" loading="lazy">
+              <p class="result-caption has-text-centered">
+                <strong>Role-Adaptive Search and Rescue.</strong> Robots self-organize into search, response and relay roles to maintain base--target connectivity.
+              </p>
+            </div>
           </div>
-          <div class="item">
-            <img src="static/images/Fig5.png" alt="Role-adaptive swarm search and rescue results" loading="lazy">
-            <h2 class="subtitle has-text-centered">
-              <strong>Physical interpretability.</strong> Density-field evolution and physical visualization across three multi-stage swarm tasks.
-            </h2>
+          
+          <div class="column is-6-desktop is-12-tablet">
+            <div class="result-card">
+              <img src="static/images/Fig5.png" alt="Role-adaptive swarm search and rescue results" loading="lazy">
+              <p class="result-caption has-text-centered">
+                <strong>Physical interpretability.</strong> Density-field evolution and physical visualization across three multi-stage swarm tasks.
+              </p>
+            </div>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="hero is-small movie-section" id="density-field-videos">
+     <section class="hero is-small movie-section" id="density-field-videos">
       <div class="hero-body">
         <div class="container">
           <h2 class="title is-3 has-text-centered">Density-field evolution and physical visualization</h2>
           <p class="movie-caption has-text-centered">
             Supplementary movies showing how learned advection weights, diffusion coefficients and reaction rates reshape density fields and microscopic robot motion across task phases.
           </p>
-          <div id="density-movie-carousel" class="carousel results-carousel">
-            <div class="item item-video-density-1">
-              <video poster="" id="density-video1" controls muted loop height="100%" preload="metadata">
+          <div class="video-grid columns is-multiline">
+            <div class="column is-4-desktop is-6-tablet item-video-density-1">
+              <video poster="" id="density-video1" controls muted loop width="100%" preload="metadata">
                 <source src="static/videos/Movie S1.mp4" type="video/mp4">
               </video>
-              <h2 class="subtitle has-text-centered"><span class="movie-title">Supplementary Movie 1.</span> Trail-guided foraging: density-field transition from exploration to resource approach, homing and trail following.</h2>
+              <h2 class="subtitle has-text-centered" style="font-size: 0.95rem;"><span class="movie-title">Supplementary Movie 1.</span> Trail-guided foraging: density-field transition from exploration to resource approach, homing and trail following.</h2>
             </div>
-            <div class="item item-video-density-2">
-              <video poster="" id="density-video2" controls muted loop height="100%" preload="metadata">
+            <div class="column is-4-desktop is-6-tablet item-video-density-2">
+              <video poster="" id="density-video2" controls muted loop width="100%" preload="metadata">
                 <source src="static/videos/Movie S2.mp4" type="video/mp4">
               </video>
-              <h2 class="subtitle has-text-centered"><span class="movie-title">Supplementary Movie 2.</span> Formation-reconfigurable navigation: density evolution during formation keeping, morphology adaptation and recovery.</h2>
+              <h2 class="subtitle has-text-centered" style="font-size: 0.95rem;"><span class="movie-title">Supplementary Movie 2.</span> Formation-reconfigurable navigation: density evolution during formation keeping, morphology adaptation and recovery.</h2>
             </div>
-            <div class="item item-video-density-3">
-              <video poster="" id="density-video3" controls muted loop height="100%" preload="metadata">
+            <div class="column is-4-desktop is-6-tablet item-video-density-3">
+              <video poster="" id="density-video3" controls muted loop width="100%" preload="metadata">
                 <source src="static/videos/Movie S3.mp4" type="video/mp4">
               </video>
-              <h2 class="subtitle has-text-centered"><span class="movie-title">Supplementary Movie 3.</span> Role-adaptive search and rescue: density-field organization during search, response and relay formation.</h2>
+              <h2 class="subtitle has-text-centered" style="font-size: 0.95rem;"><span class="movie-title">Supplementary Movie 3.</span> Role-adaptive search and rescue: density-field organization during search, response and relay formation.</h2>
             </div>
           </div>
         </div>
@@ -369,24 +443,24 @@
           <p class="movie-caption has-text-centered">
             Supplementary movies showing how the remaining robots reorganize after partial robot failures without retraining or task-specific recovery rules.
           </p>
-          <div id="fault-movie-carousel" class="carousel results-carousel">
-            <div class="item item-video-fault-1">
-              <video poster="" id="fault-video1" controls muted loop height="100%" preload="metadata">
+          <div class="video-grid columns is-multiline">
+            <div class="column is-4-desktop is-6-tablet item-video-fault-1">
+              <video poster="" id="fault-video1" controls muted loop width="100%" preload="metadata">
                 <source src="static/videos/Movie S4.mp4" type="video/mp4">
               </video>
-              <h2 class="subtitle has-text-centered"><span class="movie-title">Supplementary Movie 4.</span> Fault tolerance in trail-guided foraging under robot failures.</h2>
+              <h2 class="subtitle has-text-centered" style="font-size: 0.95rem;"><span class="movie-title">Supplementary Movie 4.</span> Fault tolerance in trail-guided foraging under robot failures.</h2>
             </div>
-            <div class="item item-video-fault-2">
-              <video poster="" id="fault-video2" controls muted loop height="100%" preload="metadata">
+            <div class="column is-4-desktop is-6-tablet item-video-fault-2">
+              <video poster="" id="fault-video2" controls muted loop width="100%" preload="metadata">
                 <source src="static/videos/Movie S5.mp4" type="video/mp4">
               </video>
-              <h2 class="subtitle has-text-centered"><span class="movie-title">Supplementary Movie 5.</span> Fault tolerance in formation-reconfigurable navigation during passage traversal.</h2>
+              <h2 class="subtitle has-text-centered" style="font-size: 0.95rem;"><span class="movie-title">Supplementary Movie 5.</span> Fault tolerance in formation-reconfigurable navigation during passage traversal.</h2>
             </div>
-            <div class="item item-video-fault-3">
-              <video poster="" id="fault-video3" controls muted loop height="100%" preload="metadata">
+            <div class="column is-4-desktop is-6-tablet item-video-fault-3">
+              <video poster="" id="fault-video3" controls muted loop width="100%" preload="metadata">
                 <source src="static/videos/Movie S6.mp4" type="video/mp4">
               </video>
-              <h2 class="subtitle has-text-centered"><span class="movie-title">Supplementary Movie 6.</span> Fault tolerance in role-adaptive search and rescue with relay-chain reorganization.</h2>
+              <h2 class="subtitle has-text-centered" style="font-size: 0.95rem;"><span class="movie-title">Supplementary Movie 6.</span> Fault tolerance in role-adaptive search and rescue with relay-chain reorganization.</h2>
             </div>
           </div>
         </div>
@@ -400,24 +474,24 @@
           <p class="movie-caption has-text-centered">
             Supplementary movies showing how the same PhySwarm interface scales to larger robot populations while preserving task-relevant collective structures.
           </p>
-          <div id="scalability-movie-carousel" class="carousel results-carousel">
-            <div class="item item-video-scalability-1">
-              <video poster="" id="scalability-video1" controls muted loop height="100%" preload="metadata">
+          <div class="video-grid columns is-multiline">
+            <div class="column is-4-desktop is-6-tablet item-video-scalability-1">
+              <video poster="" id="scalability-video1" controls muted loop width="100%" preload="metadata">
                 <source src="static/videos/Movie S7.mp4" type="video/mp4">
               </video>
-              <h2 class="subtitle has-text-centered"><span class="movie-title">Supplementary Movie 7.</span> Scalability in trail-guided foraging with larger robot teams.</h2>
+              <h2 class="subtitle has-text-centered" style="font-size: 0.95rem;"><span class="movie-title">Supplementary Movie 7.</span> Scalability in trail-guided foraging with larger robot teams.</h2>
             </div>
-            <div class="item item-video-scalability-2">
-              <video poster="" id="scalability-video2" controls muted loop height="100%" preload="metadata">
+            <div class="column is-4-desktop is-6-tablet item-video-scalability-2">
+              <video poster="" id="scalability-video2" controls muted loop width="100%" preload="metadata">
                 <source src="static/videos/Movie S8.mp4" type="video/mp4">
               </video>
-              <h2 class="subtitle has-text-centered"><span class="movie-title">Supplementary Movie 8.</span> Scalability in formation-reconfigurable navigation through constrained passages.</h2>
+              <h2 class="subtitle has-text-centered" style="font-size: 0.95rem;"><span class="movie-title">Supplementary Movie 8.</span> Scalability in formation-reconfigurable navigation through constrained passages.</h2>
             </div>
-            <div class="item item-video-scalability-3">
-              <video poster="" id="scalability-video3" controls muted loop height="100%" preload="metadata">
+            <div class="column is-4-desktop is-6-tablet item-video-scalability-3">
+              <video poster="" id="scalability-video3" controls muted loop width="100%" preload="metadata">
                 <source src="static/videos/Movie S9.mp4" type="video/mp4">
               </video>
-              <h2 class="subtitle has-text-centered"><span class="movie-title">Supplementary Movie 9.</span> Scalability in role-adaptive search and rescue with larger relay and response structures.</h2>
+              <h2 class="subtitle has-text-centered" style="font-size: 0.95rem;"><span class="movie-title">Supplementary Movie 9.</span> Scalability in role-adaptive search and rescue with larger relay and response structures.</h2>
             </div>
           </div>
         </div>
@@ -431,29 +505,30 @@
           <p class="movie-caption has-text-centered">
             Supplementary movies showing deployment on the physical e-puck platform under sensing, actuation, localization and communication imperfections.
           </p>
-          <div id="real-movie-carousel" class="carousel results-carousel">
-            <div class="item item-video-real-1">
-              <video poster="" id="real-video1" controls muted loop height="100%" preload="metadata">
+          <div class="video-grid columns is-multiline">
+            <div class="column is-4-desktop is-6-tablet item-video-real-1">
+              <video poster="" id="real-video1" controls muted loop width="100%" preload="metadata">
                 <source src="static/videos/Movie S10.mp4" type="video/mp4">
               </video>
-              <h2 class="subtitle has-text-centered"><span class="movie-title">Supplementary Movie 10.</span> Real-robot validation of trail-guided foraging.</h2>
+              <h2 class="subtitle has-text-centered" style="font-size: 0.95rem;"><span class="movie-title">Supplementary Movie 10.</span> Real-robot validation of trail-guided foraging.</h2>
             </div>
-            <div class="item item-video-real-2">
-              <video poster="" id="real-video2" controls muted loop height="100%" preload="metadata">
+            <div class="column is-4-desktop is-6-tablet item-video-real-2">
+              <video poster="" id="real-video2" controls muted loop width="100%" preload="metadata">
                 <source src="static/videos/Movie S11.mp4" type="video/mp4">
               </video>
-              <h2 class="subtitle has-text-centered"><span class="movie-title">Supplementary Movie 11.</span> Real-robot validation of formation-reconfigurable navigation.</h2>
+              <h2 class="subtitle has-text-centered" style="font-size: 0.95rem;"><span class="movie-title">Supplementary Movie 11.</span> Real-robot validation of formation-reconfigurable navigation.</h2>
             </div>
-            <div class="item item-video-real-3">
-              <video poster="" id="real-video3" controls muted loop height="100%" preload="metadata">
+            <div class="column is-4-desktop is-6-tablet item-video-real-3">
+              <video poster="" id="real-video3" controls muted loop width="100%" preload="metadata">
                 <source src="static/videos/Movie S12.mp4" type="video/mp4">
               </video>
-              <h2 class="subtitle has-text-centered"><span class="movie-title">Supplementary Movie 12.</span> Real-robot validation of role-adaptive search and rescue.</h2>
+              <h2 class="subtitle has-text-centered" style="font-size: 0.95rem;"><span class="movie-title">Supplementary Movie 12.</span> Real-robot validation of role-adaptive search and rescue.</h2>
             </div>
           </div>
         </div>
       </div>
     </section>
+
 
     <section class="section hero is-light" id="what-learned">
       <div class="container is-max-desktop">
